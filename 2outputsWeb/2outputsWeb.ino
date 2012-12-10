@@ -10,11 +10,13 @@
 #define LINE_BUFFER_SIZE      255
 #define REQUEST_BUFFER_SIZE   96
 
+#define TIMER_PORTE_AUTO      500
+
 // Enter a MAC address and IP address for your controller below.
 // The IP address will be dependent on your local network:
 
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-IPAddress ip(192,168,1,250);
+IPAddress ip(10,42,254,250);
 
 // Initialize the Ethernet server library
 // with the IP address and port you want to use 
@@ -76,22 +78,19 @@ void loop()
 
           get_page(lineBuffer, requestBuffer, HTTP_VERB);
           
-          if (strcmp(requestBuffer, "/output1") == 0) {
-            switchOneState = !switchOneState;
-            digitalWrite(switchOne, switchOneState);
+          if (strcmp(requestBuffer, "/openthedoor") == 0) {
+            digitalWrite(switchOne, HIGH);
+            delay(TIMER_PORTE_AUTO);
+            digitalWrite(switchOne, LOW);
           }
-          
-          if (strcmp(requestBuffer, "/output2") == 0) {
-            switchTwoState = !switchTwoState;    
-            digitalWrite(switchTwo, switchTwoState);
-          }
+//          
+//          if (strcmp(requestBuffer, "/output2") == 0) {
+//            digitalWrite(switchTwo, HIGH);
+//            delay(TIMER_PORTE_AUTO);
+//            digitalWrite(switchTwo, LOW);
+//          }
   
-          client.print("output 1 : ");
-          client.print(switchOneState);
-          client.println(" | <a href='/output1'>invert</a> <br />");
-          client.print("output 2 : ");
-          client.print(switchTwoState);
-          client.println(" | <a href='/output2'>invert</a>");
+          client.println("<a href='/porte'>ouvrir</a> <br />");
           
           // reinit
           lineBufferIndex = 0;
