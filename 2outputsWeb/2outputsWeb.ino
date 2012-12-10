@@ -83,14 +83,8 @@ void loop()
             delay(TIMER_PORTE_AUTO);
             digitalWrite(switchOne, LOW);
           }
-//          
-//          if (strcmp(requestBuffer, "/output2") == 0) {
-//            digitalWrite(switchTwo, HIGH);
-//            delay(TIMER_PORTE_AUTO);
-//            digitalWrite(switchTwo, LOW);
-//          }
   
-          client.println("<a href='/porte'>ouvrir</a> <br />");
+          client.println("<a href='/openthedoor'>ouvrir</a> <br />");
           
           // reinit
           lineBufferIndex = 0;
