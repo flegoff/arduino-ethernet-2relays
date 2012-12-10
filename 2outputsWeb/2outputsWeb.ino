@@ -84,7 +84,7 @@ void loop()
             digitalWrite(switchOne, LOW);
           }
   
-          client.println("<a href='/openthedoor'>ouvrir</a> <br />");
+          client.println("<a href='/openthedoor'>open</a> <br />");
           
           // reinit
           lineBufferIndex = 0;
