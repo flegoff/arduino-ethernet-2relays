@@ -41,6 +41,14 @@ void setup()
   server.begin();
 }
 
+void open_door()
+{
+  digitalWrite(switchOne, HIGH);
+  delay(TIMER_PORTE_AUTO);
+  digitalWrite(switchOne, LOW);
+  // open door
+}
+
 // Extract /XYZ from a request line :
 // GET /XYZ HTTP/1.1
 
@@ -75,20 +83,23 @@ void loop()
           client.println("HTTP/1.1 200 OK");
           client.println("Content-Type: text/html");
           client.println();
+          client.println("<!DOCTYPE HTML>");
+          client.println("<html>");
+          client.println("<body>");
 
+          client.println("<h1>HELLO</h1>");
           get_page(lineBuffer, requestBuffer, HTTP_VERB);
-          
+
           if (strcmp(requestBuffer, "/openthedoor") == 0) {
-            digitalWrite(switchOne, HIGH);
-            delay(TIMER_PORTE_AUTO);
-            digitalWrite(switchOne, LOW);
+            open_door();
+          } else {
+            client.println("<a href='/openthedoor'>open</a> <br />");
           }
-  
-          client.println("<a href='/openthedoor'>open</a> <br />");
-          
+          client.println("</body></html>");
+
           // reinit
           lineBufferIndex = 0;
-          
+
           break;
         }
         if (c == '\n') {
